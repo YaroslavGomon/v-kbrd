@@ -1,3 +1,89 @@
+const body = document.querySelector('body');
+
+const markup = `  <div class="container">
+<div class="keyboard_wrapp">
+  <div class="keyboard_keys">
+    <div class="row">
+      <div class="keys sym"></div>
+      <div class="keys sym dig">1</div>
+      <div class="keys sym dig">2</div>
+      <div class="keys sym dig">3</div>
+      <div class="keys sym dig">4</div>
+      <div class="keys sym dig">5</div>
+      <div class="keys sym dig">6</div>
+      <div class="keys sym dig">7</div>
+      <div class="keys sym dig">8</div>
+      <div class="keys sym dig">9</div>
+      <div class="keys sym dig">0</div>
+      <div class="keys sym dig">-</div>
+      <div class="keys sym dig">=</div>
+      <div class="keys backspace_key">Backspace</div>
+    </div>
+    <div class="row">
+      <div class="keys tab_key">Tab</div>
+      <div class="keys sym">Q</div>
+      <div class="keys sym">W</div>
+      <div class="keys sym">E</div>
+      <div class="keys sym">R</div>
+      <div class="keys sym">T</div>
+      <div class="keys sym">Y</div>
+      <div class="keys sym">U</div>
+      <div class="keys sym">I</div>
+      <div class="keys sym">O</div>
+      <div class="keys sym">P</div>
+      <div class="keys sym dig">[</div>
+      <div class="keys sym dig">]</div>
+      <div class="keys del_key">Del</div>
+    </div>
+    <div class="row">
+      <div class="keys caps_lock_key">Caps Lock</div>
+      <div class="keys sym">A</div>
+      <div class="keys sym">S</div>
+      <div class="keys sym">D</div>
+      <div class="keys sym">F</div>
+      <div class="keys sym">G</div>
+      <div class="keys sym">H</div>
+      <div class="keys sym">J</div>
+      <div class="keys sym">K</div>
+      <div class="keys sym">L</div>
+      <div class="keys sym dig">;</div>
+      <div class="keys sym dig">'</div>
+      <div class="keys sym dig slash_key"></div>
+      <div class="keys enter_key">Enter</div>
+    </div>
+    <div class="row">
+      <div class="keys shift_key shift_left">Shift</div>
+      <div class="keys sym">Z</div>
+      <div class="keys sym">X</div>
+      <div class="keys sym">C</div>
+      <div class="keys sym">V</div>
+      <div class="keys sym">B</div>
+      <div class="keys sym">N</div>
+      <div class="keys sym">M</div>
+      <div class="keys sym dig">,</div>
+      <div class="keys sym dig">.</div>
+      <div class="keys sym dig"></div>
+      <div class="keys arrow_up">&#9650</div>
+      <div class="keys shift_key shift_right">Shift</div>
+    </div>
+    <div class="row">
+      <div class="keys ctrl_key ctrl_left">Ctrl</div>
+      <div class="keys win_key">Win</div>
+      <div class="keys alt_key alt_left">Alt</div>
+      <div class="keys space_key"></div>
+      <div class="keys alt_key alt_right">Alt</div>
+      <div class="keys arrow_left">&#9664</div>
+      <div class="keys arrow_down">&#9660</div>
+      <div class="keys arrow_right">&#9654</div>
+      <div class="keys ctrl_key ctrl_right">Ctrl</div>
+    </div>
+  </div>
+</div>
+<input class="text" type="text">
+</div>
+`;
+body.insertAdjacentHTML('afterbegin', markup);
+
 const keyboard_wrapp = document.querySelector('.keyboard_wrapp');
 const keys = document.querySelectorAll('.keys');
 const spaceKey = document.querySelector('.space_key');
@@ -8,7 +94,6 @@ const ctrl_right = document.querySelector('.ctrl_right');
 const alt_left = document.querySelector('.alt_left');
 const alt_right = document.querySelector('.alt_right');
 const caps_lock_key = document.querySelector('.caps_lock_key');
-const body = document.querySelector('body');
 const text_input = document.querySelector('.text');
 const arrow_up = document.querySelector('.arrow_up');
 const arrow_left = document.querySelector('.arrow_left');
@@ -142,8 +227,122 @@ const specialKeys = [
   ['ArrowRight', arrow_right],
 ];
 
+const digitsShiftEn = [
+  '!',
+  '@',
+  '#',
+  '$',
+  '%',
+  '^',
+  '&',
+  '*',
+  '(',
+  ')',
+  '_',
+  '+',
+  '{',
+  '}',
+  ':',
+  '"',
+  '|',
+  '<',
+  '>',
+  '?',
+];
+const digitsEn = [
+  '1',
+  '2',
+  '3',
+  '4',
+  '5',
+  '6',
+  '7',
+  '8',
+  '9',
+  '0',
+  '-',
+  '=',
+  '[',
+  ']',
+  ';',
+  "'",
+  '\\',
+  ',',
+  '.',
+  '/',
+];
+
+const digitsRu = [
+  '1',
+  '2',
+  '3',
+  '4',
+  '5',
+  '6',
+  '7',
+  '8',
+  '9',
+  '0',
+  '-',
+  '=',
+  'х',
+  'ъ',
+  'ж',
+  'э',
+  '\\',
+  'б',
+  'ю',
+  '.',
+];
+
+const digitsShiftRu = [
+  '!',
+  '"',
+  '№',
+  ';',
+  '%',
+  ':',
+  '?',
+  '*',
+  '(',
+  ')',
+  '_',
+  '+',
+  'Х',
+  'Ъ',
+  'Ж',
+  'Э',
+  '\\',
+  'Б',
+  'Ю',
+  ',',
+];
+
 let multiPress = 0;
 let currentLang = 'en';
+let savedLeng;
+let savingKeys;
+
+// Add symbols to keyboard
+
+if (localStorage.getItem('lang')) {
+  for (let i = 0; i < sym.length; i++) {
+    sym[i].textContent = localStorage.getItem(i);
+  }
+} else {
+  for (let i = 0; i < sym.length; i++) {
+    sym[i].textContent = smallEn[i];
+  }
+}
+
+const save = function () {
+  for (let i = 0; i < sym.length; i++) {
+    localStorage.setItem(i, sym[i].textContent);
+  }
+  localStorage.setItem('lang', currentLang);
+};
+
+save();
 
 for (let i of keys) {
   i.addEventListener('mousedown', function (e) {
@@ -173,7 +372,7 @@ for (let i of keys) {
       i.classList.add('remove');
     }
     for (let i of specialKeys) {
-      if (e.code === i[0]) {
+      if (e.code === i[0] && e.code !== 'CapsLock') {
         i[1].classList.remove('active');
         i[1].classList.remove('remove');
       }
@@ -196,12 +395,14 @@ window.addEventListener('keydown', function (e) {
       }
       currentLang = 'ru';
       multiPress = 0;
+      save();
     } else {
       for (let i = 0; i < sym.length; i++) {
         sym[i].textContent = smallEn[i];
       }
       currentLang = 'en';
       multiPress = 0;
+      save();
     }
   }
 });
@@ -209,27 +410,66 @@ window.addEventListener('keydown', function (e) {
 // Shift key
 
 window.addEventListener('keydown', function (e) {
-  if (e.key === 'Shift') {
+  if (e.key === 'Shift' && currentLang === 'en') {
     for (let i = 0; i < sym.length; i++) {
       sym[i].textContent = sym[i].textContent.toUpperCase();
+    }
+    for (let i = 0; i < dig.length; i++) {
+      dig[i].textContent = digitsShiftEn[i];
+    }
+  }
+  if (e.key === 'Shift' && currentLang === 'ru') {
+    for (let i = 0; i < sym.length; i++) {
+      sym[i].textContent = sym[i].textContent.toUpperCase();
+    }
+    for (let i = 0; i < dig.length; i++) {
+      dig[i].textContent = digitsShiftRu[i];
     }
   }
 });
 
 window.addEventListener('keyup', function (e) {
-  if (e.key === 'Shift') {
+  if (e.key === 'Shift' && currentLang === 'en') {
     for (let i = 0; i < sym.length; i++) {
       sym[i].textContent = sym[i].textContent.toLowerCase();
+    }
+    for (let i = 0; i < dig.length; i++) {
+      dig[i].textContent = digitsEn[i];
+    }
+  }
+  if (e.key === 'Shift' && currentLang === 'ru') {
+    for (let i = 0; i < sym.length; i++) {
+      sym[i].textContent = sym[i].textContent.toLowerCase();
+    }
+    for (let i = 0; i < dig.length; i++) {
+      dig[i].textContent = digitsRu[i];
     }
   }
 });
 
-// for (let i = 0; i < keys.length; i++) {
-//   localStorage.setItem(i, keys[i].textContent);
-// }
+// Capslock
 
-// console.log(localStorage.getItem('55'));
+window.addEventListener('keyup', function (e) {
+  if (e.key === 'CapsLock' && e.getModifierState('CapsLock')) {
+    caps_lock_key.classList.add('active');
+    for (let i = 0; i < sym.length; i++) {
+      sym[i].textContent = sym[i].textContent.toUpperCase();
+    }
+    save();
+    localStorage.setItem('caps', caps_lock_key.classList.contains('active'));
+  }
+  if (e.key === 'CapsLock' && !e.getModifierState('CapsLock')) {
+    caps_lock_key.classList.remove('active');
+    caps_lock_key.classList.remove('remove');
+    for (let i = 0; i < sym.length; i++) {
+      sym[i].textContent = sym[i].textContent.toLowerCase();
+    }
+    save();
+  }
+});
 
-for (let i = 0; i < sym.length; i++) {
-  sym[i].textContent = smallEn[i];
-}
+window.addEventListener('DOMContentLoaded', function () {
+  if (keys[15].textContent === keys[15].textContent.toUpperCase()) {
+    caps_lock_key.classList.add('active');
+  }
+});
