@@ -83,6 +83,7 @@ const markup = `  <div class="container">
   <input class="text" type="text">
   </div>
 `;
+
 body.insertAdjacentHTML('afterbegin', markup);
 
 const keyboard_wrapp = document.querySelector('.keyboard_wrapp');
@@ -250,6 +251,7 @@ const digitsShiftEn = [
   '>',
   '?',
 ];
+
 const digitsEn = [
   '1',
   '2',
@@ -323,8 +325,6 @@ let multiPress = 0;
 let currentLang = 'en';
 let savedLeng;
 let savingKeys;
-
-// Add symbols to keyboard
 
 if (localStorage.getItem('lang')) {
   for (let i = 0; i < sym.length; i++) {
@@ -408,8 +408,6 @@ window.addEventListener('keydown', function (e) {
   }
 });
 
-// Shift key
-
 window.addEventListener('keydown', function (e) {
   if (e.key === 'Shift' && currentLang === 'en') {
     for (let i = 0; i < sym.length; i++) {
@@ -447,8 +445,6 @@ window.addEventListener('keyup', function (e) {
     }
   }
 });
-
-// Capslock
 
 window.addEventListener('keyup', function (e) {
   if (e.key === 'CapsLock' && e.getModifierState('CapsLock')) {
