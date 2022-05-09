@@ -78,9 +78,10 @@ const markup = `  <div class="container">
       <div class="keys ctrl_key ctrl_right">Ctrl</div>
     </div>
   </div>
-</div>
-<input class="text" type="text">
-</div>
+  </div>
+  <div>Left Alt + Left Ctrl to Language change</div>
+  <input class="text" type="text">
+  </div>
 `;
 body.insertAdjacentHTML('afterbegin', markup);
 
@@ -312,7 +313,7 @@ const digitsShiftRu = [
   'Ъ',
   'Ж',
   'Э',
-  '\\',
+  '/',
   'Б',
   'Ю',
   ',',
