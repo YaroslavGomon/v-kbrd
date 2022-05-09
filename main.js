@@ -19,6 +19,108 @@ const del_key = document.querySelector('.del_key');
 const backspace_key = document.querySelector('.backspace_key');
 const win_key = document.querySelector('.win_key');
 const enter_key = document.querySelector('.enter_key');
+const sym = document.querySelectorAll('.sym');
+const dig = document.querySelectorAll('.dig');
+
+const smallEn = [
+  '`',
+  '1',
+  '2',
+  '3',
+  '4',
+  '5',
+  '6',
+  '7',
+  '8',
+  '9',
+  '0',
+  '-',
+  '=',
+  'q',
+  'w',
+  'e',
+  'r',
+  't',
+  'y',
+  'u',
+  'i',
+  'o',
+  'p',
+  '[',
+  ']',
+  'a',
+  's',
+  'd',
+  'f',
+  'g',
+  'h',
+  'j',
+  'k',
+  'l',
+  ';',
+  "'",
+  '\\',
+  'z',
+  'x',
+  'c',
+  'v',
+  'b',
+  'n',
+  'm',
+  ',',
+  '.',
+  '/',
+];
+
+const smallRu = [
+  'ё',
+  '1',
+  '2',
+  '3',
+  '4',
+  '5',
+  '6',
+  '7',
+  '8',
+  '9',
+  '0',
+  '-',
+  '=',
+  'й',
+  'ц',
+  'у',
+  'к',
+  'е',
+  'н',
+  'г',
+  'ш',
+  'щ',
+  'з',
+  'х',
+  'ъ',
+  'ф',
+  'ы',
+  'в',
+  'а',
+  'п',
+  'р',
+  'о',
+  'л',
+  'д',
+  'ж',
+  'э',
+  '\\',
+  'я',
+  'ч',
+  'с',
+  'м',
+  'и',
+  'т',
+  'ь',
+  'б',
+  'ю',
+  '.',
+];
 
 const specialKeys = [
   ['Tab', tab_key],
@@ -39,6 +141,9 @@ const specialKeys = [
   ['ArrowDown', arrow_down],
   ['ArrowRight', arrow_right],
 ];
+
+let multiPress = 0;
+let currentLang = 'en';
 
 for (let i of keys) {
   i.addEventListener('mousedown', function (e) {
@@ -79,8 +184,52 @@ for (let i of keys) {
   });
 }
 
-for (let i = 0; i < keys.length; i++) {
-  localStorage.setItem(i, keys[i].textContent);
-}
+window.addEventListener('keydown', function (e) {
+  if (e.code === 'AltLeft') {
+    multiPress++;
+  }
+  if (e.code === 'ControlLeft') {
+    multiPress++;
+    if (multiPress === 2 && currentLang === 'en') {
+      for (let i = 0; i < sym.length; i++) {
+        sym[i].textContent = smallRu[i];
+      }
+      currentLang = 'ru';
+      multiPress = 0;
+    } else {
+      for (let i = 0; i < sym.length; i++) {
+        sym[i].textContent = smallEn[i];
+      }
+      currentLang = 'en';
+      multiPress = 0;
+    }
+  }
+});
 
-console.log(localStorage.getItem('55'));
+// Shift key
+
+window.addEventListener('keydown', function (e) {
+  if (e.key === 'Shift') {
+    for (let i = 0; i < sym.length; i++) {
+      sym[i].textContent = sym[i].textContent.toUpperCase();
+    }
+  }
+});
+
+window.addEventListener('keyup', function (e) {
+  if (e.key === 'Shift') {
+    for (let i = 0; i < sym.length; i++) {
+      sym[i].textContent = sym[i].textContent.toLowerCase();
+    }
+  }
+});
+
+// for (let i = 0; i < keys.length; i++) {
+//   localStorage.setItem(i, keys[i].textContent);
+// }
+
+// console.log(localStorage.getItem('55'));
+
+for (let i = 0; i < sym.length; i++) {
+  sym[i].textContent = smallEn[i];
+}
